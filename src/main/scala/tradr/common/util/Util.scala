@@ -1,4 +1,4 @@
-package tradr.common
+package tradr.common.util
 
 import java.io._
 

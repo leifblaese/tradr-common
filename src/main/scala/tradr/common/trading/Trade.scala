@@ -1,6 +1,6 @@
-package tradr.common
+package tradr.common.trading
 
-import tradr.common.PartialTrade
+import tradr.common.trading.PartialTrade
 
 object Trade {
 

@@ -1,4 +1,4 @@
-package tradr.common
+package tradr.common.trading
 
 object Action extends Enumeration {
 

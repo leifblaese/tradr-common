@@ -1,10 +1,12 @@
-package tradr.common
+package tradr.common.trading
+
 //
 //import org.nd4j.linalg.factory.Nd4j
 ////import org.nd4j.linalg.api.ndarray.INDArray
 
-import play.api.libs.json._
 import play.api.libs.functional.syntax._
+import play.api.libs.json._
+import Currencies
 
 object PartialTrade {
 
