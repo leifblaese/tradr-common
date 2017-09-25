@@ -23,8 +23,10 @@ object Trade {
   }
 
   def computeProfit(trade: Trade) = {
-    val tradewiseBaseCurrency = trade.tradeSequence.head.currency1
-    trade.tradeSequence.last.portfolioChange(tradewiseBaseCurrency) + trade.tradeSequence.head.portfolioChange(tradewiseBaseCurrency)
+    val tradedInstrument = trade.tradeSequence.head.instrument
+    val baseCurrency = Instruments.getBaseCurrency(tradedInstrument)
+
+    trade.tradeSequence.last.portfolioChange(baseCurrency) + trade.tradeSequence.head.portfolioChange(baseCurrency)
   }
 }
 

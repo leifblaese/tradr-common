@@ -1,25 +1,39 @@
 package tradr.common.trading
 
-//
-//import org.nd4j.linalg.factory.Nd4j
-////import org.nd4j.linalg.api.ndarray.INDArray
 
-import play.api.libs.functional.syntax._
-import play.api.libs.json._
-import Currencies
+import play.api.libs.functional._
+import play.api.libs.json._ // JSON library
+import play.api.libs.json.Reads._ // Custom validation helpers
+import play.api.libs.functional.syntax._ // Combinator syntax
 
 object PartialTrade {
 
+
+
+
+
+
+  private val partialTradeBuilder =
+    (JsPath \ "id").read[Long] and
+    (JsPath \ "instrument").read[String].map(s => Instruments.withName(s)) and
+    (JsPath \ "action").read[String].map(s => Action.withName(s)) and
+    (JsPath \ "time").read[Long] and
+    (JsPath \ "price").read[Double] and
+    (JsPath \ "lot").read[Double] and
+    (JsPath \ "portfolioChange")
+      .read[Array[(String, Double)]]
+      .map(m => m.map{case (key, value) => (Currencies.withName(key), value)}.toMap) and
+    (JsPath \ "actionProbabilities").read[Array[Double]] and
+    (JsPath \ "valuePrediction").read[Array[Double]]
+
+  implicit val partialTradeRead: Reads[PartialTrade] = partialTradeBuilder(PartialTrade.apply _)
+
   implicit val partialTradeWrites = new Writes[PartialTrade] {
     def writes(trade: PartialTrade) = {
-//      val l: Int = trade.actionProbabilities.length()
-//      val actionProbs =  (0 until l).map(i => trade.actionProbabilities.getDouble(i)).toArray
-//      val valuePreds = (0 until l).map(i => trade.valuePrediction.getDouble(i)).toArray
 
       Json.obj(
         "id" -> trade.id,
-        "currency1" -> trade.currency1.toString,
-        "currency2" -> trade.currency2.toString,
+        "instrument" -> trade.instrument.toString,
         "action" -> trade.action.toString,
         "time" -> trade.time,
         "price" -> trade.price,
@@ -30,33 +44,6 @@ object PartialTrade {
       )
     }
   }
-
-  private val partialTradeBuilder =
-    (JsPath \ "id").read[Long] and
-      (JsPath \ "currency1")
-        .read[String]
-        .map(s => Currencies.withName(s)) and
-      (JsPath \ "currency2")
-        .read[String]
-        .map(s => Currencies.withName(s)) and
-      (JsPath \ "action")
-        .read[String]
-        .map(s => Action.withName(s)) and
-      (JsPath \ "time").read[Long] and
-      (JsPath \ "price").read[Double] and
-      (JsPath \ "lot").read[Double] and
-      (JsPath \ "portfolioChange")
-        .read[Array[(String, Double)]]
-        .map(m => m.map{case (key, value) => (Currencies.withName(key), value)}.toMap) and
-      (JsPath \ "actionProbabilities")
-        .read[Array[Double]] and
-//        .map(arr => Nd4j.create(arr)) and
-      (JsPath \ "valuePrediction")
-        .read[Array[Double]]
-
-  //        .map(arr => Nd4j.create(arr))
-
-  implicit val partialTradeRead = partialTradeBuilder(PartialTrade.apply _)
 
 
 
@@ -103,12 +90,14 @@ object PartialTrade {
 
 
 
+//  implicit val PartialTradeReads = Json.reads[PartialTrade]
+//  implicit val PartialTradeWrites = Json.writes[PartialTrade]
+
 }
 
 case class PartialTrade  (
                            id: Long,
-                           currency1: Currencies.Value,
-                           currency2: Currencies.Value,
+                           instrument: Instruments.Value,
                            action: Action.Value,
                            time: Long,
                            price: Double,
@@ -116,4 +105,7 @@ case class PartialTrade  (
                            portfolioChange: Map[Currencies.Value, Double],
                            actionProbabilities: Array[Double],
                            valuePrediction: Array[Double]
-                         )
+                         ) {
+
+
+}
