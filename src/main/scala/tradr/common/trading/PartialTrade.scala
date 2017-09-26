@@ -106,6 +106,6 @@ case class PartialTrade  (
                            actionProbabilities: Array[Double],
                            valuePrediction: Array[Double]
                          ) {
-
+  import PartialTrade._
 
 }

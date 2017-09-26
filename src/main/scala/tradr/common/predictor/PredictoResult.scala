@@ -1,12 +1,12 @@
 package tradr.common.predictor
 
-import play.api.libs.json.Json
+import play.api.libs.json.{Json, OWrites, Reads, Writes}
 
 
-object PredictoResult {
+object PredictorResult {
 
-  implicit val PredictorResultReads = Json.reads[PredictorResult]
-  implicit val PredictorResultWrites = Json.writes[PredictorResult]
+  implicit val PredictorResultReads: Reads[PredictorResult] = Json.reads[PredictorResult]
+  implicit val PredictorResultWrites: Writes[PredictorResult] = Json.writes[PredictorResult]
 
 }
 
@@ -33,4 +33,6 @@ case class PredictorResult(
                           timestamp: Long,
                           modelId: String,
                           results: Map[String, Array[Double]]
-                         )
+                         ) {
+  import PredictorResult._
+}

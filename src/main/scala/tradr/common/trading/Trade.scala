@@ -1,13 +1,19 @@
 package tradr.common.trading
 
+import play.api.libs.json.{Json, Reads, Writes}
 import tradr.common.trading.PartialTrade
 
 object Trade {
 
+
+  implicit val TradeReads: Reads[Trade] = Json.reads[Trade]
+  implicit val TradeWrites: Writes[Trade] = Json.writes[Trade]
+
+
   def getEmpty = Trade(id = 0L, tradeSequence = Seq())
 
   def addPartialTrade(partialTrade: PartialTrade,
-                      currentTrade: Option[Trade]) = {
+                      currentTrade: Option[Trade]): Trade = {
     currentTrade match {
       case Some(trade) => trade.copy(tradeSequence = trade.tradeSequence :+ partialTrade)
       case _ => Trade(0L, Seq(partialTrade))
@@ -22,7 +28,7 @@ object Trade {
 
   }
 
-  def computeProfit(trade: Trade) = {
+  def computeProfit(trade: Trade): Double = {
     val tradedInstrument = trade.tradeSequence.head.instrument
     val baseCurrency = Instruments.getBaseCurrency(tradedInstrument)
 
