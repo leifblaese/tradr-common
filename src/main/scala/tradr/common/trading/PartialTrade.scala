@@ -1,17 +1,11 @@
 package tradr.common.trading
 
 
-import play.api.libs.functional._
 import play.api.libs.json._ // JSON library
 import play.api.libs.json.Reads._ // Custom validation helpers
 import play.api.libs.functional.syntax._ // Combinator syntax
 
 object PartialTrade {
-
-
-
-
-
 
   private val partialTradeBuilder =
     (JsPath \ "id").read[Long] and
@@ -22,9 +16,7 @@ object PartialTrade {
     (JsPath \ "lot").read[Double] and
     (JsPath \ "portfolioChange")
       .read[Array[(String, Double)]]
-      .map(m => m.map{case (key, value) => (Currencies.withName(key), value)}.toMap) and
-    (JsPath \ "actionProbabilities").read[Array[Double]] and
-    (JsPath \ "valuePrediction").read[Array[Double]]
+      .map(m => m.map{case (key, value) => (Currencies.withName(key), value)}.toMap)
 
   implicit val partialTradeRead: Reads[PartialTrade] = partialTradeBuilder(PartialTrade.apply _)
 
@@ -38,9 +30,7 @@ object PartialTrade {
         "time" -> trade.time,
         "price" -> trade.price,
         "lot" -> trade.lot,
-        "portfolioChange" -> trade.portfolioChange.toArray.map{case (key, value) => (key.toString, value)},
-        "actionProbabilities" -> trade.actionProbabilities,
-        "valuePrediction" -> trade.valuePrediction
+        "portfolioChange" -> trade.portfolioChange.toArray.map{case (key, value) => (key.toString, value)}
       )
     }
   }
@@ -95,6 +85,20 @@ object PartialTrade {
 
 }
 
+
+/**
+  * This class identifies a partialTrade which is a unique transaction in the sequence
+  * of a full trade, i.e. a buy, sell or hold. Once the trade is closed, the
+  * sequence of partial trades is converted into a trade object.
+  *
+  * @param id
+  * @param instrument
+  * @param action
+  * @param time
+  * @param price
+  * @param lot
+  * @param portfolioChange
+  */
 case class PartialTrade  (
                            id: Long,
                            instrument: Instruments.Value,
@@ -102,10 +106,6 @@ case class PartialTrade  (
                            time: Long,
                            price: Double,
                            lot: Double,
-                           portfolioChange: Map[Currencies.Value, Double],
-                           actionProbabilities: Array[Double],
-                           valuePrediction: Array[Double]
+                           portfolioChange: Map[Currencies.Value, Double]
                          ) {
-  import PartialTrade._
-
 }
