@@ -1,15 +1,15 @@
 package tradr.common.util
 
 import java.io._
-
 import org.joda.time.DateTime
 import org.joda.time.format.DateTimeFormat
-
 import scala.io.Source
 
 
 
 object Util {
+
+
 
   // Compute epsilon for epsilon-greedy search strategy
   def computeEpsilon(i: Long, n: Long): Double = {
