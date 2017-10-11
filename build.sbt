@@ -11,7 +11,7 @@ lazy val root = (project in file("."))
     organization := "tradr",
     scalaVersion := "2.12.3",
     crossScalaVersions := Seq("2.11.11", "2.12.3"),
-    version := "0.0.3",
+    version := "0.0.5",
     libraryDependencies ++= libdeps
   ))
 
