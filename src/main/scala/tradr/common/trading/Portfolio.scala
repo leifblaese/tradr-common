@@ -1,9 +1,6 @@
 package tradr.common.trading
 
 
-object Portfolio {
-
-}
 
 
 /**

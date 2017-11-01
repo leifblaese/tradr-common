@@ -1,12 +1,12 @@
 package tradr.common.predictor
 
-import play.api.libs.json.{Json, OWrites, Reads, Writes}
+import play.api.libs.json.{Json, Reads, Writes}
 
 
-object PredictorResult {
+object PredictionResult {
 
-  implicit val PredictorResultReads: Reads[PredictorResult] = Json.reads[PredictorResult]
-  implicit val PredictorResultWrites: Writes[PredictorResult] = Json.writes[PredictorResult]
+  implicit val reads: Reads[PredictionResult] = Json.reads[PredictionResult]
+  implicit val writes: Writes[PredictionResult] = Json.writes[PredictionResult]
 
 }
 
@@ -28,11 +28,9 @@ object PredictorResult {
   * @param results Map[Array[Double\]\] of all results. Always in there: 'probabilities', which gives a probability
   *                distribution about all the possible actions
   */
-case class PredictorResult(
-                          predictionId: Long,
+case class PredictionResult(
+                          predictionId: String,
                           timestamp: Long,
                           modelId: String,
                           results: Map[String, Array[Double]]
-                         ) {
-  import PredictorResult._
-}
+                         )

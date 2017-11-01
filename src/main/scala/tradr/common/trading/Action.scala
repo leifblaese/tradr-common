@@ -2,13 +2,13 @@ package tradr.common.trading
 
 object Action extends Enumeration {
 
-  val Hold = Value(0)
-  val Buy = Value(1)
-  val Sell = Value(2)
-  val Close = Value(3)
+  val Hold: Action.Value = Value(0)
+  val Buy: Action.Value = Value(1)
+  val Sell: Action.Value = Value(2)
+  val Close: Action.Value = Value(3)
 
 
-  def get(i: Int) = {
+  def get(i: Int): Action.Value = {
     i match {
       case 0 => Hold
       case 1 => Buy

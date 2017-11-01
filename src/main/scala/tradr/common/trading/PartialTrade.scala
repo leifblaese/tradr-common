@@ -18,10 +18,10 @@ object PartialTrade {
       .read[Array[(String, Double)]]
       .map(m => m.map{case (key, value) => (Currencies.withName(key), value)}.toMap)
 
-  implicit val partialTradeRead: Reads[PartialTrade] = partialTradeBuilder(PartialTrade.apply _)
+  implicit val reads: Reads[PartialTrade] = partialTradeBuilder(PartialTrade.apply _)
 
-  implicit val partialTradeWrites = new Writes[PartialTrade] {
-    def writes(trade: PartialTrade) = {
+  implicit val writes = new Writes[PartialTrade] {
+    def writes(trade: PartialTrade): JsObject = {
 
       Json.obj(
         "id" -> trade.id,
@@ -91,13 +91,13 @@ object PartialTrade {
   * of a full trade, i.e. a buy, sell or hold. Once the trade is closed, the
   * sequence of partial trades is converted into a trade object.
   *
-  * @param id
-  * @param instrument
-  * @param action
-  * @param time
-  * @param price
-  * @param lot
-  * @param portfolioChange
+  * @param id ID of the partial trade
+  * @param instrument Instrument that was traded
+  * @param action Action that was performed
+  * @param time Timestamp, milliseconds epoch of the trade
+  * @param price rate of the instrument with which the trade was realized
+  * @param lot Lot of the trade
+  * @param portfolioChange resulting portfolio change
   */
 case class PartialTrade  (
                            id: Long,
