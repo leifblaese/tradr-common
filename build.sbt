@@ -6,12 +6,13 @@ lazy val libdeps = Seq(
 
 
 lazy val root = (project in file("."))
+  .enablePlugins(GitVersioning)
   .settings(Seq(
     name := "tradr-common",
     organization := "tradr",
     scalaVersion := "2.12.3",
     crossScalaVersions := Seq("2.11.11", "2.12.3"),
-    version := "0.0.3",
-    libraryDependencies ++= libdeps
+    libraryDependencies ++= libdeps,
+    git.useGitDescribe := true
   ))
 

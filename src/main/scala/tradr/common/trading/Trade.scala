@@ -1,6 +1,7 @@
 package tradr.common.trading
 
 import play.api.libs.json.{Json, Reads, Writes}
+import tradr.common.trading.PartialTrade
 
 object Trade {
 
@@ -41,8 +42,8 @@ object Trade {
   * Once a trade is complete (that is, its sequence terminated with a close), we can
   * compute the reward and use it to train our model
   *
-  * @param id Id of the trade
-  * @param tradeSequence Sequence of partialTrades
+  * @param id
+  * @param tradeSequence
   */
 case class Trade(
                   id: Long,

@@ -1,7 +1,7 @@
 package tradr.common.trading
 
 object Instruments extends Enumeration {
-  val EURUSD = Value("EURUSD")
+  val EURUSD: Instruments.Value = Value("EURUSD")
 
   def getBaseCurrency(v: Instruments.Value): Currencies.Value = {
     Currencies.get(v.toString.splitAt(3)._1)
