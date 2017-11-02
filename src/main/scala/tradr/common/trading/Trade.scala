@@ -1,7 +1,6 @@
 package tradr.common.trading
 
 import play.api.libs.json.{Json, Reads, Writes}
-import tradr.common.trading.PartialTrade
 
 object Trade {
 
