@@ -1,7 +1,8 @@
 
 lazy val libdeps = Seq(
   "com.typesafe" % "config" % "1.3.1",
-  "com.typesafe.play" %% "play-json" % "2.6.3"
+  "com.typesafe.play" %% "play-json" % "2.6.3",
+  "mysql" % "mysql-connector-java" % "6.0.6"
 )
 
 
